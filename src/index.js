@@ -48,8 +48,7 @@ class Game extends React.Component {
             }],
             stepNumber: 0,
             orderMovesListAscending: true,
-            xIsNext: true,
-            isWinSquare: Array(9).fill(false)
+            xIsNext: true
         };
     }
 
@@ -97,7 +96,7 @@ class Game extends React.Component {
             [0, 4, 8],
             [2, 4, 6],
         ];
-        let isWinSquare = this.state.isWinSquare.slice();
+        let isWinSquare = Array(9).fill(false);
     
         for (let i = 0; i < lines.length; i++) {
             const [a, b, c] = lines[i];
