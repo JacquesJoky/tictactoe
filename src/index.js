@@ -15,13 +15,11 @@ function Square(props) {
 }
 
 class Board extends React.Component {
-    
-    
     renderSquare(i) {
         return (
             <Square
                 value={this.props.squares[i]}
-                isWinSquare={this.props.winSquaresIndexes.includes(i) ? true : false}
+                isWinSquare={this.props.winSquaresIndexes.includes(i)}
                 onClick={() => this.props.onClick(i)}
             />
         );
@@ -55,7 +53,6 @@ class Game extends React.Component {
     }
 
     handleClick(i) {
-        //console.log('yeah');
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
         const current = history[history.length - 1];
         const row = i < 3 ? 0 : i < 6 ? 1 : 2;
@@ -98,15 +95,10 @@ class Game extends React.Component {
             [0, 4, 8],
             [2, 4, 6],
         ];
-        let isWinSquare = Array(9).fill(false);
     
         for (let i = 0; i < lines.length; i++) {
             const [a, b, c] = lines[i];
             if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-                isWinSquare[a] = true;
-                isWinSquare[b] = true;
-                isWinSquare[c] = true;
-                console.log(isWinSquare);
                 return {
                     winner: squares[a],
                     winSquaresIndexes: [a, b, c]
@@ -126,25 +118,17 @@ class Game extends React.Component {
         const gameWon = this.calculateWinner(current.squares);
         const winner = gameWon.winner;
         const winSquaresIndexes = gameWon.winSquaresIndexes.slice();
-        /*let isWinSquare = Array(9).fill(false);
-
-        if (winner) {
-            for (const i of winSquaresIndexes) {
-                isWinSquare[i] = true;
-            }
-        }
-        */
 
         const moves = history.map((step, move) => {
             const desc = move ?
                 `Go to move #${move}: ${move % 2 === 0 ? 'O' : 'X'} in (${step.moves[0]}-${step.moves[1]})` :
                 'Go to game start';
-            // Bold the text of the selected step button
             return (
                 <li key={move}>
                     <button
                         onClick={() => this.jumpTo(move)}
                         style={{
+                            // Bold the text of the selected step button
                             fontWeight:
                                 (move === this.state.stepNumber) ?
                                     'bold' :
