@@ -71,6 +71,10 @@ class Game extends React.Component {
         });
     }
 
+    toggleSortOrder(order) {
+        this.setState({ orderMovesListAscending: !order })
+    }
+
     jumpTo(step) {
         this.setState({
             stepNumber: step,
@@ -124,10 +128,10 @@ class Game extends React.Component {
                 <div className="game-info">
                     <div>{status}</div>
                     <button
-                        onClick={() => this.setState({ orderMovesListAscending: !this.state.orderMovesListAscending })}
+                        onClick={() => this.toggleSortOrder(order)}
                     >{order ? 'Sort by newest' : 'Sort by oldest'}
                     </button>
-                    <ul>{order? moves : moves.reverse()}</ul>
+                    <ul>{order ? moves : moves.reverse()}</ul>
                 </div>
             </div>
         );
