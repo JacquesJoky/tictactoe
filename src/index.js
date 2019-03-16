@@ -15,11 +15,13 @@ function Square(props) {
 }
 
 class Board extends React.Component {
+    
+    
     renderSquare(i) {
         return (
             <Square
                 value={this.props.squares[i]}
-                isWinSquare={this.props.isWinSquare[i]}
+                isWinSquare={this.props.winSquaresIndexes.includes(i) ? true : false}
                 onClick={() => this.props.onClick(i)}
             />
         );
@@ -124,13 +126,14 @@ class Game extends React.Component {
         const gameWon = this.calculateWinner(current.squares);
         const winner = gameWon.winner;
         const winSquaresIndexes = gameWon.winSquaresIndexes.slice();
-        let isWinSquare = Array(9).fill(false);
+        /*let isWinSquare = Array(9).fill(false);
 
         if (winner) {
             for (const i of winSquaresIndexes) {
                 isWinSquare[i] = true;
             }
         }
+        */
 
         const moves = history.map((step, move) => {
             const desc = move ?
@@ -166,7 +169,7 @@ class Game extends React.Component {
                 <div className="game-board">
                     <Board
                         squares={current.squares}
-                        isWinSquare={isWinSquare}
+                        winSquaresIndexes={winSquaresIndexes}
                         onClick={(i) => this.handleClick(i)}
                     />
                 </div>
