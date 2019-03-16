@@ -81,7 +81,7 @@ class Game extends React.Component {
     render() {
         const history = this.state.history;
         const current = history[this.state.stepNumber];
-        const order = history.orderMovesListAscending;
+        const order = this.state.orderMovesListAscending;
         const winner = calculateWinner(current.squares);
 
         const moves = history.map((step, move) => {
@@ -128,7 +128,7 @@ class Game extends React.Component {
                 <div className="game-info">
                     <div>{status}</div>
                     <button
-                        onClick={() => this.setState({ orderMovesListAscending: (order ? false : true) })}
+                        onClick={() => this.setState({ orderMovesListAscending: !this.state.orderMovesListAscending })}
                     >{order ? 'Sort by newest' : 'Sort by oldest'}
                     </button>
                     <ul>{moves}</ul>
