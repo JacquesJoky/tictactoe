@@ -105,10 +105,6 @@ class Game extends React.Component {
             );
         });
 
-        if (!order) {
-            moves.reverse();
-        }
-
         let status;
         if (winner) {
             status = 'Winner: ' + winner;
@@ -131,7 +127,7 @@ class Game extends React.Component {
                         onClick={() => this.setState({ orderMovesListAscending: !this.state.orderMovesListAscending })}
                     >{order ? 'Sort by newest' : 'Sort by oldest'}
                     </button>
-                    <ul>{moves}</ul>
+                    <ul>{order? moves : moves.reverse()}</ul>
                 </div>
             </div>
         );
