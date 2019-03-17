@@ -6,7 +6,7 @@ function Square(props) {
     return (
         <button
             className="square"
-            style={{backgroundColor: props.isWinSquare ? '#4CAF50' : '#FFFFFF'}}
+            style={{ backgroundColor: props.isWinSquare ? '#4CAF50' : '#FFFFFF' }}
             onClick={props.onClick}
         >
             {props.value}
@@ -95,7 +95,7 @@ class Game extends React.Component {
             [0, 4, 8],
             [2, 4, 6],
         ];
-    
+
         for (let i = 0; i < lines.length; i++) {
             const [a, b, c] = lines[i];
             if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
@@ -142,7 +142,9 @@ class Game extends React.Component {
 
         let status;
         if (winner) {
-            status = 'Winner: ' + winner;
+            status = 'We got a winner: ' + winner + '!';
+        } else if (this.state.stepNumber === 9) {
+            status = 'We got a draw. Erf.'
         } else {
             status = 'Next player: ' +
                 (this.state.xIsNext ? 'X' : 'O');
@@ -160,7 +162,7 @@ class Game extends React.Component {
                 <div className="game-info">
                     <div>{status}</div>
                     <button
-                        onClick= {this.toggleSortOrder}
+                        onClick={this.toggleSortOrder}
                     >{order ? 'Sort by newest' : 'Sort by oldest'}
                     </button>
                     <ul>{order ? moves : moves.reverse()}</ul>
