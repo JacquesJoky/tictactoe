@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 const styles = {
     root: {
         flexGrow: 1,
+        padding:24
     },
     square: {
         background: '#fff',
@@ -18,7 +19,7 @@ const styles = {
         float: 'left',
         fontSize: 40,
         fontWeight: 'bold',
-        lineHeight: 80,
+        //lineHeight: 60,
         height: 80,
         marginRight: -1,
         marginTop: -1,
@@ -92,6 +93,8 @@ function SimpleAppBar() {
 class Game extends React.Component {
     constructor(props) {
         super(props);
+
+
         this.state = {
             history: [{
                 squares: Array(9).fill(null),
@@ -205,9 +208,9 @@ class Game extends React.Component {
             <React.Fragment>
                 <CssBaseline />
                 <SimpleAppBar />
-                <Grid container>
-                    <Grid item xs={12}>
-                        <Typography variant='body1' >
+                <Grid container spacing={24}>
+                    <Grid item xs={12} gutterBottom>
+                        <Typography variant='h6' >
                         {status}
                         </Typography>
                 </Grid>
