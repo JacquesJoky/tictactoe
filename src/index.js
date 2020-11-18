@@ -1,11 +1,40 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css'
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+
+const styles = {
+    root: {
+        flexGrow: 1,
+        padding:24
+    },
+    square: {
+        background: '#fff',
+        border: '1px solid #999',
+        float: 'left',
+        fontSize: 40,
+        fontWeight: 'bold',
+        //lineHeight: 60,
+        height: 80,
+        marginRight: -1,
+        marginTop: -1,
+        padding: 0,
+        textAlign: 'center',
+        width: 80
+    }
+};
 
 function Square(props) {
+    const { classes } = props;
+
     return (
         <button
-            className="square"
+            className={classes.square}
             style={{ backgroundColor: props.isWinSquare ? '#4CAF50' : '#FFFFFF' }}
             onClick={props.onClick}
         >
@@ -14,10 +43,18 @@ function Square(props) {
     );
 }
 
+Square.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+const StyledSquare = withStyles(styles)(Square);
+
+
+
 class Board extends React.Component {
     renderSquare(i) {
         return (
-            <Square
+            <StyledSquare
                 value={this.props.squares[i]}
                 isWinSquare={this.props.winSquaresIndexes.includes(i)}
                 onClick={() => this.props.onClick(i)}
@@ -32,15 +69,32 @@ class Board extends React.Component {
             for (let j = 0; j < 3; j++) {
                 row.push(this.renderSquare(3 * i + j));
             }
-            board.push(<div className="board-row">{row}</div>);
+            board.push(
+            <Grid container direction='row'>{row}</Grid>);
         }
-        return board;
+        return (<Grid container direction='column'>{board}</Grid>);
     }
+}
+
+function SimpleAppBar() {
+    return (
+        <AppBar position="static" color="default">
+            <Toolbar>
+                <Typography
+                    variant="h6"
+                    color="inherit">
+                    Tic Tac Toe
+                </Typography>
+            </Toolbar>
+        </AppBar>
+    );
 }
 
 class Game extends React.Component {
     constructor(props) {
         super(props);
+
+
         this.state = {
             history: [{
                 squares: Array(9).fill(null),
@@ -151,23 +205,31 @@ class Game extends React.Component {
         }
 
         return (
-            <div className="game">
-                <div className="game-board">
+            <React.Fragment>
+                <CssBaseline />
+                <SimpleAppBar />
+                <Grid container spacing={24}>
+                    <Grid item xs={12} gutterBottom>
+                        <Typography variant='h6' >
+                        {status}
+                        </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
                     <Board
                         squares={current.squares}
                         winSquaresIndexes={winSquaresIndexes}
                         onClick={(i) => this.handleClick(i)}
                     />
-                </div>
-                <div className="game-info">
-                    <div>{status}</div>
+                </Grid>
+                <Grid item xs={12} sm={6}>
                     <button
                         onClick={this.toggleSortOrder}
                     >{order ? 'Sort by newest' : 'Sort by oldest'}
                     </button>
                     <ul>{order ? moves : moves.reverse()}</ul>
-                </div>
-            </div>
+                </Grid>
+                </Grid>
+            </React.Fragment >
         );
     }
 }
